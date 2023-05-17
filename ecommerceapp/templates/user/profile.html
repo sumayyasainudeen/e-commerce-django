@@ -1,0 +1,133 @@
+{% extends 'user/usertop.html' %}
+
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/ca2474264d.js" crossorigin="anonymous"></script>
+
+    </head>
+<body>
+    
+
+<div class=" container index-body" style="padding-top: 100px;">
+
+    <h2>Hello, <span class=" font-italic">{{customer.first_name }} {{customer.last_name }}</span></h2>
+    <h5>Address :{{customer.address }}</h5>
+   
+
+      <div class="row row-cols-2 g-3 pt-5">
+        <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'view_order' %}"><h5 class="card-title">
+                        Your Orders
+                        </h5> </a>                 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Gift Cards
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Amazon Mobile App  
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Your Address
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Login & security
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Your Payments
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+</div>
+
+
+<style>
+    .fbtn{
+        width: 300px;
+        border-radius: 30px;
+        background-color: rgb(144, 179, 179);
+        color: white;
+    }
+    i{
+        width: 100px;
+    }
+</style>
+</body>
+</html>
+{% endblock %}

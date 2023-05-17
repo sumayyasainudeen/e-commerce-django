@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="index-body" style="padding-top: 100px;">
+
+<div class="container ">
+    {% for message in messages %}
+    <h5>
+        <div class="alert alert-danger " style="width: 50%;">
+            {{ message }}
+        </div>
+    </h5>
+    {% endfor %}
+</div>
+<div class="main container bg-light  mt-5" style="border-radius: 10px; width:50%">
+    <h1 class="text-dark  text-center pt-5" >Register Here</h1>
+
+    <form action="{% url 'create_user' %}" method="post" enctype="multipart/form-data" class="form pt-2 pb-5 mx-auto" style="width:80% ; ">
+        {% csrf_token %}
+        <label class="mt-3" for="">First Name</label>
+        <input type="text" name="first_name" class="form-control " placeholder="First Name">
+        <label class="mt-3" for="">Last Name</label>
+        <input type="text" name="last_name" class="form-control " placeholder="Last Name">
+        <label class="mt-3" for="">Email</label>
+        <input type="email" name="email" class="form-control " placeholder="Email">
+        <label class="mt-3" for="">Username </label>
+        <input type="text" name="username" class="form-control " placeholder="Username">
+        <label class="mt-3" for="">Password</label>
+        <input type="password" name="password" class="form-control " placeholder="Strong Password">
+        <label class="mt-3" for="">Confirm Password</label>
+        <input type="password" name="cpassword" class="form-control " placeholder="Confirm Password">
+        
+        <label class="mt-3" for="">Address</label>
+        <textarea rows="3" cols="22" name="address" class="form-control  " placeholder="Address"></textarea>
+
+        <label class="mt-3" for="">Phone Number</label>
+        <input type="number" name="phone_number" class="form-control  " placeholder="Phone Number">
+
+        <button type="submit" class="btn btn-info text-white rounded-pill  mt-5" style="width: 200px; margin-left: 35%;">Submit</button>
+        <br>
+        <p class='text-muted text-center mt-2'>Already a member. <a class="" href="">Login</a></p>
+    </form>
+</div>
+
+</div>
+<style>
+     
+</style>
+
+{% endblock %}

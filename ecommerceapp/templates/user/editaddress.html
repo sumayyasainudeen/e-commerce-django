@@ -1,0 +1,21 @@
+{% extends 'user/usertop.html' %}
+{% block content %}
+
+<div class="index-body" style="padding-top: 100px;">
+
+    <div class="container mt-5">
+
+        <form method="post" action="/edit_address/{{ customer.id }}">
+            {% csrf_token %}
+            <label for="">Edit Your Address</label>
+            <input type="text" name="address" class="form-control " value="{{ customer.address}}" style="width: 40rem;">
+           
+
+            <button type="submit" class="btn btn-dark mt-3 " style="width: 650px;">Submit</button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'admin/admintop.html' %}
+
+{% block content %}
+
+<div class=" container index-body" style="padding-top: 150px;">
+
+   
+
+      <div class="row row-cols-2 g-3 pt-5">
+        <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'add_category_page' %}"><h5 class="card-title">
+                        Add Category
+                        </h5> </a>                 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'view_category' %}"><h5 class="card-title">
+                        View Category
+                        </h5>   </a>               
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'add_product_page' %}"><h5 class="card-title">
+                        Add Product 
+                        </h5> </a>                 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'view_product' %}"><h5 class="card-title">
+                        View Product
+                        </h5>     </a>             
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        Login & security
+                        </h5>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">                 
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <a class="text-dark" href="{% url 'view_users_page' %}"><h5 class="card-title">
+                        View Users
+                        </h5> </a>                 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}

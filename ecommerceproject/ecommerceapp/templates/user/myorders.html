@@ -1,0 +1,39 @@
+{% extends 'user/usertop.html' %}
+{% block content %}
+
+<div class="index-body" style="padding-top: 100px;">
+
+    <div class="container mt-5">
+
+
+        {% for i in order %}
+
+
+
+        <div class="row  border">
+            <div class="col-md-4 p-2">
+                <img src=" {{ i.product.product_image.url }}" alt="" width="150rem">
+            </div>
+            <div class="col-md-4 p-2 mx-auto pt-5">
+                <h3>{{ i.product.product_name }}</h3>
+                    <h5>{{ i.product.product_description }}</h5>
+                    <h5>Rs.{{ i.product.product_price }}</h5>
+               <div class="text-center">
+            </div>
+            </div>
+            <div class="col-md-4 p-2 text-right d-flex align-items-center  ">
+                <a href="#" class="btn btn-success m-2 " style="width: 8rem;">Buy Again</a><br>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}
