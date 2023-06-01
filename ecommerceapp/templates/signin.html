@@ -1,6 +1,24 @@
 {% extends 'main.html' %}
 {% block content %}
+{% load static %}
 
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'images/bg4.webp' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    div.part3 {
+        height: calc(100% - <height_of_navigation_bar>);
+        /* Add any other styles you need for div.part3 */
+    }
+</style>
 
 <div class="row pt-5">
     <div class="col-md-4"></div>
@@ -16,26 +34,26 @@
     <div class="col-md-4"></div>
 </div>
 
-<div class='row pb-5'>
+<div class='row py-5'>
     <div class='col-md-2'></div>
     <div class='col-md-8 mt-5 pb-5'>
-        <div class="card p-3 bg-light" >
+        <div class="card p-3 bg-dark" >
             <form method='post' class='post-form mx-auto' action="{% url 'signin' %}" style="width:80% ;" >
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <h3 class="text-dark">Log In</h3>
+                        <h3 class="text-white p-5">Log In</h3>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
-                <div class="row">
+                <div class="row text-white">
                     <div class="col-md-12">
                         <label>Username</label>
                         <input type="text" name="username" class='form-control'>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row text-white">
                     <div class="col-md-12">
                         <label>Password</label>
                         <input type="password" name="password" class='form-control'>
@@ -44,9 +62,13 @@
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="col-md-4 mt-3">
-                        <button type='submit' class='btn btn-info rounded-pill w-100 text-white'>LogIn</button>
+                        <button type='submit' class='btn btn-info rounded-pill w-100 text-white my-5'>LogIn</button>
                     </div>
                     <div class="col-md-4"></div>
+                </div>
+                <div class="text-center">
+                    <h6 class="text-center">Not a Member?</h6>
+                    <a href="{% url 'signup_page' %}" >Sign Up</a>
                 </div>
             </form>
         </div>

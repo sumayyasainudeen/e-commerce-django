@@ -9,9 +9,12 @@ from ecommerceapp.models import CartModel, CategoryModel, OrderModel, ProductMod
 
 # Create your views here.
 def index(request):
+    current_user = request.user
+    cust_id=current_user.id-1
     product=ProductModel.objects.all().order_by('-id')
     category=CategoryModel.objects.all()
-    return render(request,'index.html',{'product':product,'category':category})
+    c_number = CartModel.objects.filter(customer=cust_id).count()
+    return render(request,'index.html',{'product':product,'category':category,'no':c_number})
 
 
 def signin_page(request):
@@ -197,13 +200,21 @@ def product_detail(request,pk):
 
 @login_required(login_url='signin_page')
 def add_cart(request,pk):
-    product = ProductModel.objects.get(id=pk)
     current_user = request.user
     cust_id=current_user.id-1
-    print(cust_id)
     customer = customerModel.objects.get(id=cust_id)
-    cart= CartModel(product=product,customer=customer)
-    cart.save()
+    product = ProductModel.objects.get(id=pk)
+    p_count = CartModel.objects.filter(product=product,customer=customer).count()
+    print(p_count)
+    qty = p_count+1
+    
+    if p_count == 0:
+        cart= CartModel(product=product,customer=customer,quantity=qty)
+        cart.save()
+    else:
+        cart = CartModel.objects.get(product=product,customer=customer)
+        cart.quantity=qty
+        cart.save()
     return redirect('/')
 
 @login_required(login_url='signin_page')
@@ -212,8 +223,9 @@ def view_cart(request):
     cust_id=current_user.id-1
     print(cust_id)
     customer=customerModel.objects.filter(id=cust_id)
+    c_number = CartModel.objects.filter(customer=cust_id).count()
     cart = CartModel.objects.filter(customer=cust_id)
-    return render(request,'user/cart.html',{'cart':cart})
+    return render(request,'user/cart.html',{'cart':cart,'no':c_number})
 
 def remove_cart(request,pk):
     cart=CartModel.objects.get(id=pk)
@@ -236,9 +248,10 @@ def view_order(request):
     current_user = request.user
     cust_id=current_user.id-1
     print(cust_id)
+    c_number = CartModel.objects.filter(customer=cust_id).count()
     customer=customerModel.objects.filter(id=cust_id)
     order = OrderModel.objects.filter(customer=cust_id)
-    return render(request,'user/myorders.html',{'order':order})
+    return render(request,'user/myorders.html',{'order':order,'no':c_number})
 
 
 @login_required(login_url='signin_page')
@@ -246,7 +259,8 @@ def view_profile(request):
     current_user = request.user
     cust_id=current_user.id-1
     customer = customerModel.objects.get(id=cust_id)
-    return render(request,'user/profile.html',{'customer':customer})
+    c_number = CartModel.objects.filter(customer=cust_id).count()
+    return render(request,'user/profile.html',{'customer':customer,'no':c_number})
 
 def view_users_page(request):
     customers = customerModel.objects.all()

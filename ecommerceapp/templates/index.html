@@ -1,6 +1,146 @@
 {% extends 'main.html' %}
 
 {% block content %}
+{% load static %}
+
+<style>
+    .pbtn {
+        font-size: 2vh;
+        width: 7rem;
+    }
+
+    div.part1 {
+        background-color: rgb(249, 236, 169);
+    }
+
+    div.part3 {
+        /* background-color: rgb(237, 253, 187); */
+        background-image: url("{% static 'images/bg4.webp' %}");
+        background-size: 100% 100%;
+    }
+
+    .part6 {
+        background-image: url("{% static 'images/homebg1.jpg' %}");
+        background-size: 100% 100%;
+
+    }
+
+    .cat {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cat .card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .cat:hover .card-overlay {
+        opacity: 1;
+    }
+
+    .cat .card-title,
+    .cat .btn {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .cat:hover .card-title,
+    .cat:hover .btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .cat .card-image-container {
+        position: relative;
+    }
+
+    .cat .card-img-top {
+        width: 100%;
+        height: auto;
+    }
+    .finance {
+        background: white;
+        background-size: cover;
+        position: relative;
+        padding: 80px 0;
+    }
+    .finance:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+
+    .finance .member {
+        text-align: center;
+        margin-bottom: 20px;
+        background: #343a40;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .finance .member .member-info {
+        opacity: 0;
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        transition: 0.2s;
+    }
+
+    .finance .member .member-info-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        transition: bottom 0.4s;
+    }
+
+    .finance .member .member-info-content h4 {
+        font-weight: 700;
+        margin-bottom: 2px;
+        font-size: 18px;
+        color: #fff;
+    }
+
+    .finance .member .member-info-content span {
+        font-style: italic;
+        display: block;
+        font-size: 13px;
+        color: #fff;
+    }
+
+    .finance .member:hover .member-info {
+        background: linear-gradient(0deg, rgba(51, 50, 50, 0.9) 0%, rgba(52, 52, 52, 0.8) 20%, rgba(98, 99, 99, 0) 100%);
+        background-color: rgba(98, 98, 98, 0.5);
+        opacity: 1;
+        transition: 0.4s;
+    }
+
+    .finance .member:hover .member-info-content {
+        bottom: 60px;
+        transition: bottom 0.4s;
+    }
+
+    .finance .member:hover .social {
+        bottom: 0;
+        transition: bottom ease-in-out 0.4s;
+    }
+
+</style>
 
 <div class="index-body" style="padding-top: 80px;">
 
@@ -89,11 +229,29 @@
         </marquee>
 
 
-        <div class="container-fluid my-3">
+        <div class="container-fluid my-3 finance">
             <h2 class="heading text-center my-4 text-dark">CATEGORIES</h2>
 
+            <div class="row">
+                {% for c in category %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="{{ c.category_image.url }}" class="img-fluid" alt="">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4> {{ c.category_name }}</h4>
+                                <a href="{% url 'category_page' c.id %}" class="btn btn-primary">Shop Now</a>
 
-            <div class="card-deck">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <!-- <div class="card-deck">
                 {% for c in category %}
                 <div class="card">
                     <img class="card-img-top " src="{{ c.category_image.url }}" alt="Card image">
@@ -105,51 +263,360 @@
                 {% endfor %}
 
 
-            </div>
-        </div>
+            </div> -->
+</div>
 
 
-        <div class="part2 container py-4">
-            <h2 class="heading text-center pt-5 text-dark">FEATURED TODAY</h2>
-            <h4 class="text-secondary text-center pb-5">Your Daily Brand Edit</h4>
+<div class="part2 container py-4">
+    <h2 class="heading text-center pt-5 text-dark">FEATURED TODAY</h2>
+    <h4 class="text-secondary text-center pb-5">Your Daily Brand Edit</h4>
 
-            <div class="row">
-                {% for i in product|slice:":8" %}
-                <div class="col-md-3">
+    <div class="row">
+        {% for i in product|slice:":8" %}
+        <div class="col-md-3">
 
-                    <div class="card border-0" style="width: 12rem;">
-                        <a href="{% url 'product_detail' i.id %}"><img class="card-img-top"
-                                src="{{ i.product_image.url }}" alt="Card image cap"></a>
-                        <div class="card-body text-center">
-                            <h5 class="card-title ">{{ i.product_name }}</h5>
-                            <p class="card-text ">{{ i.product_description }}</p>
-                            <p class="card-text ">Rs.{{ i.product_price }}</p>
-                            <a href="{% url 'add_cart' i.id %}" class="btn btn-warning pbtn mb-2">Add to Cart</a>
-                            <a href="{% url 'add_order' i.id %}" class="btn btn-success pbtn">Buy Now</a>
+            <div class="card border-0">
+                <a href="{% url 'product_detail' i.id %}"><img class="card-img-top" src="{{ i.product_image.url }}"
+                        alt="Card image cap"></a>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ i.product_name }}</h5>
+                    <p class="card-text text-dark">{{ i.product_description }}</p>
+                    <p class="card-text text-dark">Rs.{{ i.product_price }}</p>
+                    <a href="{% url 'add_cart' i.id %}" class="btn btn-warning btn-sm pbtn mb-2">Add to Cart</a>
+                    <a href="{% url 'add_order' i.id %}" class="btn btn-success btn-sm pbtn mb-2">Buy Now</a>
 
 
-
-                        </div>
-                    </div>
 
                 </div>
-                {% endfor %}
-
-            </div>
-            <div class="text-center my-5">
-                <a href="{% url 'more_products_page' %}" class="btn btn-dark ">MORE PRODUCTS</a>
             </div>
 
-            <style>
-                .pbtn {
-                    font-size: 2vh;
-                    width: 7rem;
-                }
-            </style>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="text-center my-5">
+        <a href="{% url 'more_products_page' %}" class="btn btn-info ">MORE PRODUCTS</a>
+    </div>
+
+
+</div>
+
+<div class="container-fluid">
+    <div class="part1 row">
+        <img class="img-fluid m-auto py-4" src="{% static 'images/19.jpg' %}" alt="" width="97%">
+    </div>
+</div>
+
+<div class="part2 container py-4">
+    <h2 class="heading text-center text-dark">BLOCKBUSTER DEALS</h2>
+    <h4 class="text-secondary text-center pb-3">Offers you Simply Cannot Miss</h4>
+
+    <div class="card-deck">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/22.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/23.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/24.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/25.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/26.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <!-- <div class="card ">
+                    <img class="card-img-top" src="images/27.jpg" alt="Card image">
+                    <div class="card-img-overlay">
+                        <a href="#" class="btn "></a>
+                    </div>
+                </div> -->
+    </div>
+    <div class="text-center my-3">
+        <button type="button" class="btn btn-primary ">MORE </button>
+    </div>
+</div>
+
+<div class="part3">
+    <div class=" container py-4">
+
+        <h2 class="heading text-center text-dark ">DEALS WHEEL</h2>
+        <h4 class="text-secondary text-center pb-3">Grab These Before They're Gone </h4>
+
+        <div class="card-deck">
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/28.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/29.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/30.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/31.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/27.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <!-- <div class="card ">
+                    <img class="card-img-top" src="images/33.jpg" alt="Card image">
+                    <div class="card-img-overlay">
+                        <a href="#" class="btn "></a>
+                    </div>
+                </div> -->
+        </div>
+        <div class="text-center my-3">
+            <button type="button" class="btn btn-primary mt-5">MORE </button>
+        </div>
+    </div>
+</div>
+
+
+<div class=" container py-4">
+
+    <h2 class="heading text-center text-dark">FEATURED TODAY</h2>
+    <h4 class="text-secondary text-center pb-3">Your Daily Brand Edit</h4>
+
+    <div class="card-deck mt-4">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/34.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/35.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
         </div>
 
-    </body>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/36.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/37.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
 
-    </html>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/38.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/39.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="text-center my-3">
+        <button type="button" class="btn btn-primary mt-5">MORE </button>
+    </div>
+</div>
+
+
+
+<div class="part6 mb-3">
+    <div class=" container py-4">
+
+        <h2 class="heading text-center text-dark">HOME BOUTIQUE</h2>
+        <h4 class="text-secondary text-center pb-3">All You Need TO Revamp your Space</h4>
+
+        <div class="card-deck mt-5">
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h1.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h2.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h3.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h4.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h5.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-deck mt-4">
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h6.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h7.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h8.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h9.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+            <div class="card ">
+                <img class="card-img-top" src="{% static 'images/h10.jpg' %}" alt="Card image">
+                <div class="card-img-overlay">
+                    <a href="#" class="btn stretched-link"></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center my-3">
+            <button type="button" class="btn btn-primary ">MORE </button>
+        </div>
+    </div>
+</div>
+
+
+<div class=" container py-4">
+
+    <h2 class="heading text-center text-dark">TOP BRANDS</h2>
+    <h4 class="text-secondary text-center pb-3">Discover Brands</h4>
+
+    <div class="card-deck mt-5">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b1.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b2.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b11.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b12.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b5.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b13.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b7.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b8.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b9.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+        <div class="card ">
+            <img class="card-img-top" src="{% static 'images/b10.jpg' %}" alt="Card image">
+            <div class="card-img-overlay">
+                <a href="#" class="btn stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center my-3">
+        <button type="button" class="btn btn-primary ">MORE </button>
+    </div>
+</div>
+</div>
+
+
+</body>
+
+</html>
 </div>
 {% endblock %}

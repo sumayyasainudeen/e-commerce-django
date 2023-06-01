@@ -18,7 +18,7 @@
 <body>
     <header class="" style="position: fixed; z-index: 1; width: 100%; ">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-info p-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark p-4" >
             <!-- <img src="{% static 'images/title.png' %}" alt="" width="260px"> -->
            <h1 class="head text-white" style=" font-family: Brush Script MT;
            font-size: 3.5rem;" >ECom</h1>
@@ -34,23 +34,15 @@
                         <a class="nav-link text-white m-2" href="{% url 'index' %}"> <i class="fa-solid fa-house"></i><span
                                 class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="">Mens Fasion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="">Womens Fasion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="">Kids Fasion</a>
-                    </li>
+                   
                     <form class="form-inline my-lg-0 m">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-light  my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-outline-light  my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                     
                     {% if request.user.is_authenticated and user.is_staff != 1 %}
                     <li class="nav-item">
-                        <a class="nav-link text-white m-2 " href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link text-white m-2 " href="{% url 'view_cart' %}" ><i class="fa-solid fa-cart-shopping">{{ no }}</i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white m-2" href="{% url 'view_order' %}">My Orders</a>
@@ -66,11 +58,11 @@
                    
                     
                     <li class="nav-item">
-                        <a class="btn btn-danger m-2" href="{% url 'signin_page' %}">Sign In</a>
+                        <a class="btn btn-info m-2" href="{% url 'signin_page' %}" >Sign In</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="btn btn-danger text-white m-2" href="{% url 'signup_page' %}">Sign Up</a>
-                    </li>
+                    </li> -->
                     {% endif %}
 
                    
@@ -125,5 +117,23 @@
 
 </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        // Close the mobile menu when a link is clicked
+        $(".navbar-nav li a").click(function () {
+            $(".navbar-collapse").collapse('hide');
+        });
+
+        // Close the mobile menu when the toggle button is clicked again
+        $("#navbarToggleBtn").click(function () {
+            if ($(".navbar-collapse").hasClass("show")) {
+                $(".navbar-collapse").collapse('hide');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

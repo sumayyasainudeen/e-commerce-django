@@ -19,9 +19,10 @@
 <body>
     <header class=" " style="position: fixed; z-index: 1; width: 100%; ">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-info p-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark p-4">
             <!-- <img src="{% static 'images/title.png' %}" alt="" width="260px"> -->
-           <h1 class="head text-white" >ECom</h1>
+            <h1 class="head text-white" style=" font-family: Brush Script MT;
+           font-size: 3.5rem;">ECom</h1>
             <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -31,26 +32,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto ">
                     <li class="nav-item active">
-                        <a class="nav-link text-white m-2" href="{% url 'index' %}"> <i class="fa-solid fa-house"></i><span
-                                class="sr-only">(current)</span></a>
+                        <a class="nav-link text-white m-2" href="{% url 'index' %}"> <i
+                                class="fa-solid fa-house"></i><span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="">Mens Fasion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="{% url 'signup_page' %}">Womens Fasion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="{% url 'signin_page' %}">Kids Fasion</a>
-                    </li>
+
                     <form class="form-inline my-lg-0 m">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-light  my-sm-0" type="submit">Search</button>
                     </form>
-                    
+
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-white m-2 " href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link text-white m-2 " href="{% url 'view_cart' %}"><i
+                                class="fa-solid fa-cart-shopping">{{ no }}</i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white m-2" href="{% url 'view_order' %}">My Orders</a>
@@ -61,10 +55,10 @@
                     <li class="nav-item">
                         <a class="nav-link text-white m-2" href="{% url 'signout' %}">logout</a>
                     </li>
-                    
+
                     {% else %}
-                   
-                    
+
+
                     <li class="nav-item">
                         <a class="btn btn-danger m-2" href="{% url 'signin_page' %}">Sign In</a>
                     </li>
@@ -72,21 +66,23 @@
                         <a class="btn btn-danger text-white m-2" href="{% url 'signup_page' %}">Sign Up</a>
                     </li>
                     {% endif %}
-                    
-                   
+
+
                 </ul>
 
             </div>
         </nav>
 
-      
+
+
+
+
+    </header>
+
    
-    
-
-</header>
 
 
-    <div class="sidebar fixed-top">
+    <div class="sidebar fixed-top text-white" style="z-index: 0;">
         <a class="active" href="{% url 'view_profile' %}">Profile</a>
         <a href="{% url 'view_cart' %}">Cart</a>
         <a href="{% url 'view_order' %}">My Orders</a>
@@ -99,42 +95,39 @@
 
     </div>
 
-
-
-
     {% block content %}
+    {% endblock  %}
 
-    {% endblock %}
+
+
 
     <style>
         .sidebar {
             margin-top: 7.5rem;
             padding: 0;
             width: 250px;
-            background-color: #f1f1f1;
+            background-color: #316770;
             height: 100%;
             overflow: auto;
+            
         }
 
         .sidebar a {
             display: block;
-            color: black;
+            color: rgb(252, 252, 252);
             padding: 15px;
             text-decoration: none;
         }
 
-        /* .sidebar a.active {
-            background-color: #242529;
-            color: white;
-        } */
-
+      
         .sidebar a:hover {
-            background-color: rgb(127, 125, 125);
+            background-color: rgb(24, 51, 62);
             color: white;
         }
 
         @media screen and (max-width: 700px) {
             .sidebar {
+                margin-top: 0;
                 width: 100%;
                 height: auto;
                 position: relative;
@@ -155,6 +148,8 @@
                 float: none;
             }
         }
+
+       
     </style>
 
 </body>

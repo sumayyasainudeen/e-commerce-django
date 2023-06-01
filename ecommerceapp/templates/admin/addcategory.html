@@ -2,25 +2,48 @@
 
 {% block content %}
 
-<div class="content" >
+{% load static %}
+
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'images/bg4.webp' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    div.part3 {
+        height: calc(100% - <height_of_navigation_bar>);
+        /* Add any other styles you need for div.part3 */
+    }
+</style>
+
+<!-- <div class="content part3" > -->
+    <div class=" container index-body part3" style="padding-top: 150px;">
 
    
 
             <div class="container">
-                <h3 class="alert alert-dark text-center mb-5" style="width: 650px;">
+                <h3 class="alert alert-dark text-center mb-5" >
                     Add Category Details
                 </h3>
                     <form method="post" action="{% url 'add_category' %}" enctype="multipart/form-data" >
                         {% csrf_token %}
                         <input type="text" name="categoryname" class="form-control mt-3" placeholder="Enter Category Name">
-                        <input type="file" name="file" accept="image/*" class="form-control mt-3  " style="width: 650px;">
-                        <button type="submit" class="btn btn-dark mt-3 " style="width: 650px;">Submit</button>
+                        <input type="file" name="file" accept="image/*" class="form-control mt-3  " >
+                        <div class="text-center">
+                        <button type="submit" class="btn btn-dark mt-3 " >Submit</button>
+                    </div>
                     </form>
 
                     <div class="col-md-4">
                         {% for message in messages %}
                         <h5>
-                            <div class="alert alert-success mt-5 text-center" style="width: 620px;">
+                            <div class="alert alert-success mt-5 text-center" >
                                 {{ message }}
                             </div>
                         </h5>
@@ -28,19 +51,7 @@
                     </div>
             </div>
         </body>
-        <style>
-            .container{
-                position: absolute;
-                left: 30%;
-                top: 27%;
-            }
-            input[type=text],[type=number]{
-                width: 650px;
-            }
-            /* .btn{
-                width: 600px;
-            } */
-        </style>
+       
         </html>
 
 </div>

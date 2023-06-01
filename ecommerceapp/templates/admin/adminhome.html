@@ -1,8 +1,27 @@
 {% extends 'admin/admintop.html' %}
 
 {% block content %}
+{% load static %}
 
-<div class=" container index-body" style="padding-top: 150px;">
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'images/bg4.webp' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    div.part3 {
+        height: calc(100% - <height_of_navigation_bar>);
+        /* Add any other styles you need for div.part3 */
+    }
+</style>
+
+<div class=" container index-body part3" style="padding-top: 150px;">
 
    
 
@@ -14,7 +33,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <a class="text-dark" href="{% url 'add_category_page' %}"><h5 class="card-title">
+                    <a class="text-dark" href="{% url 'add_category_page' %}"><h5 class="card-title text-dark">
                         Add Category
                         </h5> </a>                 
                   </div>
@@ -29,7 +48,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <a class="text-dark" href="{% url 'view_category' %}"><h5 class="card-title">
+                    <a class="text-dark" href="{% url 'view_category' %}"><h5 class="card-title text-dark">
                         View Category
                         </h5>   </a>               
                   </div>
@@ -44,7 +63,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <a class="text-dark" href="{% url 'add_product_page' %}"><h5 class="card-title">
+                    <a class="text-dark" href="{% url 'add_product_page' %}"><h5 class="card-title text-dark">
                         Add Product 
                         </h5> </a>                 
                   </div>
@@ -59,7 +78,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <a class="text-dark" href="{% url 'view_product' %}"><h5 class="card-title">
+                    <a class="text-dark" href="{% url 'view_product' %}"><h5 class="card-title text-dark">
                         View Product
                         </h5>     </a>             
                   </div>
@@ -74,7 +93,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title text-dark">
                         Login & security
                         </h5>                  
                   </div>
@@ -89,7 +108,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <a class="text-dark" href="{% url 'view_users_page' %}"><h5 class="card-title">
+                    <a class="text-dark" href="{% url 'view_users_page' %}"><h5 class="card-title text-dark">
                         View Users
                         </h5> </a>                 
                   </div>

@@ -1,8 +1,27 @@
 {% extends 'admin/admintop.html' %}
 
 {% block content %}
+{% load static %}
 
-<div class=" content" >
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'images/bg4.webp' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    div.part3 {
+        height: calc(100% - <height_of_navigation_bar>);
+        /* Add any other styles you need for div.part3 */
+    }
+</style>
+
+<div class=" content part3" >
     
     
                 <div class="container">
