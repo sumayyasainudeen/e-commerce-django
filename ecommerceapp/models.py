@@ -27,8 +27,9 @@ class customerModel(models.Model):
 class CartModel(models.Model):
     product=models.ForeignKey(ProductModel,on_delete=models.CASCADE,null=True)
     customer=models.ForeignKey(customerModel,on_delete=models.CASCADE,null=True)
-    quantity = models.IntegerField( null=True)
+    quantity = models.IntegerField(default=0, null=True)
 
 class OrderModel(models.Model):
     product=models.ForeignKey(ProductModel,on_delete=models.CASCADE,null=True)
     customer=models.ForeignKey(customerModel,on_delete=models.CASCADE,null=True)
+    quantity = models.IntegerField(default=0, null=True)

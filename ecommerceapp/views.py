@@ -4,17 +4,34 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from ecommerceapp.models import CartModel, CategoryModel, OrderModel, ProductModel, customerModel
+from django.db.models import Count
 
 
 
 # Create your views here.
 def index(request):
-    current_user = request.user
-    cust_id=current_user.id-1
-    product=ProductModel.objects.all().order_by('-id')
-    category=CategoryModel.objects.all()
-    c_number = CartModel.objects.filter(customer=cust_id).count()
-    return render(request,'index.html',{'product':product,'category':category,'no':c_number})
+    if request.user.is_authenticated:
+        current_user = request.user
+        cust_id=current_user.id-1   
+        product=ProductModel.objects.all().order_by('-id')
+        category=CategoryModel.objects.all()
+        c_number = CartModel.objects.filter(customer=cust_id).count()
+        o_number = OrderModel.objects.filter(customer=cust_id).count()
+        return render(request,'index.html',{'product':product,'category':category,'no':c_number,'o_no':o_number})
+    else:
+        product=ProductModel.objects.all().order_by('-id')
+        category=CategoryModel.objects.all()
+        
+        return render(request,'index.html',{'product':product,'category':category})
+# def index(request):
+#     current_user = request.user
+#     cust_id=current_user.id-1   
+#     product=ProductModel.objects.all().order_by('-id')
+#     category=CategoryModel.objects.all()
+#     c_number = CartModel.objects.filter(customer=cust_id).count()
+#     o_number = OrderModel.objects.filter(customer=cust_id).count()
+#     return render(request,'index.html',{'product':product,'category':category,'no':c_number,'o_no':o_number})
+
 
 
 def signin_page(request):
@@ -179,22 +196,27 @@ def create_user(request):
         return redirect('signup_page')
 
 def category_page(request,pk):
+   
     cats= CategoryModel.objects.all()
     cat= CategoryModel.objects.get(id=pk)
     product= ProductModel.objects.filter(category=cat).order_by('-id')
+   
     return render(request,'category.html',{'product':product,'cat':cat,'cats':cats})
 
 
 def category_page1(request,pk):
+    
     category= CategoryModel.objects.all()
     return render(request,'category.html',{'cat':category})
 
 def more_products_page(request):
+   
     product=ProductModel.objects.all().order_by('-id')
     category=CategoryModel.objects.all()
     return render(request,'moreproducts.html',{'product':product,'category':category})
 
 def product_detail(request,pk):
+   
     product =ProductModel.objects.filter(id=pk)
     return render(request,'productdetails.html',{'product':product})
 
@@ -204,9 +226,16 @@ def add_cart(request,pk):
     cust_id=current_user.id-1
     customer = customerModel.objects.get(id=cust_id)
     product = ProductModel.objects.get(id=pk)
-    p_count = CartModel.objects.filter(product=product,customer=customer).count()
-    print(p_count)
-    qty = p_count+1
+    # p_count = CartModel.objects.filter(product=product, customer=customer).count()
+   
+    try:
+        cart_product = CartModel.objects.get(product=product, customer=customer)
+        p_count = cart_product.quantity
+    except CartModel.DoesNotExist:
+        p_count = 0
+    # p_count = products.quantity
+   
+    qty = int(p_count)+1
     
     if p_count == 0:
         cart= CartModel(product=product,customer=customer,quantity=qty)
@@ -225,7 +254,8 @@ def view_cart(request):
     customer=customerModel.objects.filter(id=cust_id)
     c_number = CartModel.objects.filter(customer=cust_id).count()
     cart = CartModel.objects.filter(customer=cust_id)
-    return render(request,'user/cart.html',{'cart':cart,'no':c_number})
+    o_number = OrderModel.objects.filter(customer=cust_id).count()
+    return render(request,'user/cart.html',{'cart':cart,'no':c_number,'o_no':o_number})
 
 def remove_cart(request,pk):
     cart=CartModel.objects.get(id=pk)
@@ -237,10 +267,25 @@ def add_order(request,pk):
     product = ProductModel.objects.get(id=pk)
     current_user = request.user
     cust_id=current_user.id-1
-    print(cust_id)
     customer = customerModel.objects.get(id=cust_id)
-    order= OrderModel(product=product,customer=customer)
-    order.save()
+    
+    # order_product = OrderModel.objects.get(product=product,customer=customer)
+    # p_count = order_product.quantity
+    try:
+        order_product = OrderModel.objects.get(product=product, customer=customer)
+        o_count = order_product.quantity
+    except OrderModel.DoesNotExist:
+        o_count = 0
+
+    qty = o_count+1
+    
+    if o_count == 0:
+        order= OrderModel(product=product,customer=customer,quantity=qty)
+        order.save()
+    else:
+        order = OrderModel.objects.get(product=product,customer=customer)
+        order.quantity=qty
+        order.save()
     return redirect('/')
 
 @login_required(login_url='signin_page')
@@ -249,18 +294,20 @@ def view_order(request):
     cust_id=current_user.id-1
     print(cust_id)
     c_number = CartModel.objects.filter(customer=cust_id).count()
+    o_number = OrderModel.objects.filter(customer=cust_id).count()
     customer=customerModel.objects.filter(id=cust_id)
     order = OrderModel.objects.filter(customer=cust_id)
-    return render(request,'user/myorders.html',{'order':order,'no':c_number})
+    return render(request,'user/myorders.html',{'order':order,'no':c_number,'o_no':o_number})
 
 
 @login_required(login_url='signin_page')
 def view_profile(request):
     current_user = request.user
     cust_id=current_user.id-1
-    customer = customerModel.objects.get(id=cust_id)
+    customer = customerModel.objects.filter(id=cust_id)
     c_number = CartModel.objects.filter(customer=cust_id).count()
-    return render(request,'user/profile.html',{'customer':customer,'no':c_number})
+    o_number = OrderModel.objects.filter(customer=cust_id).count()
+    return render(request,'user/profile.html',{'customer':customer,'no':c_number,'o_no':o_number})
 
 def view_users_page(request):
     customers = customerModel.objects.all()

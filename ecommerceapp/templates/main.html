@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -15,13 +16,34 @@
     <script src="https://kit.fontawesome.com/ca2474264d.js" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
+    <style>
+        .notification {
+          text-decoration: none;
+          /* padding: 15px 26px; */
+          position: relative;
+          display: inline-block;
+        }
+        
+        
+        
+        .notification .badge {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          padding: 5px 10px;
+          border-radius: 50%;
+          background: white;
+          color: black;
+        }
+            </style>
     <header class="" style="position: fixed; z-index: 1; width: 100%; ">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark p-4" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark p-4">
             <!-- <img src="{% static 'images/title.png' %}" alt="" width="260px"> -->
-           <h1 class="head text-white" style=" font-family: Brush Script MT;
-           font-size: 3.5rem;" >ECom</h1>
+            <h1 class="head text-white" style=" font-family: Brush Script MT;
+           font-size: 3.5rem;">ECom</h1>
             <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -30,22 +52,32 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto ">
-                    <li class="nav-item active">
-                        <a class="nav-link text-white m-2" href="{% url 'index' %}"> <i class="fa-solid fa-house"></i><span
-                                class="sr-only">(current)</span></a>
+                    <li class="nav-item active ">
+                        <a class="nav-link text-white m-2" href="{% url 'index' %}"> <i
+                                class="fa-solid fa-house"></i><span class="sr-only">(current)</span></a>
                     </li>
-                   
+
                     <form class="form-inline my-lg-0 m">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-light  my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-outline-light  my-sm-0" type="submit"><i
+                                class="fas fa-search"></i></button>
                     </form>
-                    
+
                     {% if request.user.is_authenticated and user.is_staff != 1 %}
                     <li class="nav-item">
-                        <a class="nav-link text-white m-2 " href="{% url 'view_cart' %}" ><i class="fa-solid fa-cart-shopping">{{ no }}</i></a>
+                        <a class="nav-link  position-relative notification bg-transparent text-white "
+                            href="{% url 'view_cart' %}">
+                            <span><i class="fa-solid fa-cart-shopping "></i></span>
+                            <span class="badge">{{no}}</span>
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link text-white m-2" href="{% url 'view_order' %}">My Orders</a>
+                        <a class="nav-link  position-relative notification bg-transparent text-white"
+                            href="{% url 'view_order' %}">
+                            <span>Orders</span>
+                            <span class="badge">{{o_no}}</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white m-2" href="{% url 'view_profile' %}">My Profile</a>
@@ -53,87 +85,88 @@
                     <li class="nav-item">
                         <a class="nav-link text-white m-2" href="{% url 'signout' %}">logout</a>
                     </li>
-                    
+
                     {% else %}
-                   
-                    
+
+
                     <li class="nav-item">
-                        <a class="btn btn-info m-2" href="{% url 'signin_page' %}" >Sign In</a>
+                        <a class="btn btn-info m-2" href="{% url 'signin_page' %}">Sign In</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="btn btn-danger text-white m-2" href="{% url 'signup_page' %}">Sign Up</a>
                     </li> -->
                     {% endif %}
 
-                   
+
                 </ul>
 
             </div>
         </nav>
 
 
-   
-    
 
-</header>
+
+
+    </header>
 
 
     {% block content %}
-            
+
     {% endblock %}
     <div class="footer bg-dark text-white">
-<div class="container">
-<div class="row p-5 ">
-    <div class="col-md-3 font-weight-light">
-        <h5>Get to Know Us</h5>
-        <h6>About ECom</h6>
-        <h6>Careers</h6>
-        <h6>ECom Science</h6>
-    </div>
-    <div class="col-md-3">
-        <h5>Shop with Us</h5>
-        <h6>Your Account</h6>
-        <h6>Your Orders</h6>
-        <h6>Your Addresses</h6>
-        <h6>Your Lists</h6>
-    </div>
-    <div class="col-md-3">
-        <h5>Make Money with Us</h5>
-        <h6>Protect and build your brand</h6>
-        <h6>Sell on ECom</h6>
-        <h6>Fulfillment by ECom</h6>
-        <h6>Become an Affiliate</h6>
-        <h6>Advertise Your Products</h6>
-    </div>
-    <div class="col-md-3">
-        <h5>Let Us Help You</h5>
-        <h6>Help</h6>
-        <h6>COVID-19 and Amazon</h6>
-        <h6>Shipping & Delivery</h6>
-        <h6>Returns & Replacements</h6>
-        <h6>Amazon App Download</h6>
-    </div>
-</div> 
+        <div class="container">
+            <div class="row p-5 ">
+                <div class="col-md-3 font-weight-light">
+                    <h5>Get to Know Us</h5>
+                    <h6>About ECom</h6>
+                    <h6>Careers</h6>
+                    <h6>ECom Science</h6>
+                </div>
+                <div class="col-md-3">
+                    <h5>Shop with Us</h5>
+                    <h6>Your Account</h6>
+                    <h6>Your Orders</h6>
+                    <h6>Your Addresses</h6>
+                    <h6>Your Lists</h6>
+                </div>
+                <div class="col-md-3">
+                    <h5>Make Money with Us</h5>
+                    <h6>Protect and build your brand</h6>
+                    <h6>Sell on ECom</h6>
+                    <h6>Fulfillment by ECom</h6>
+                    <h6>Become an Affiliate</h6>
+                    <h6>Advertise Your Products</h6>
+                </div>
+                <div class="col-md-3">
+                    <h5>Let Us Help You</h5>
+                    <h6>Help</h6>
+                    <h6>COVID-19 and Amazon</h6>
+                    <h6>Shipping & Delivery</h6>
+                    <h6>Returns & Replacements</h6>
+                    <h6>Amazon App Download</h6>
+                </div>
+            </div>
 
-</div>
-</div>
+        </div>
+    </div>
 
 
-<script>
-    $(document).ready(function () {
-        // Close the mobile menu when a link is clicked
-        $(".navbar-nav li a").click(function () {
-            $(".navbar-collapse").collapse('hide');
-        });
-
-        // Close the mobile menu when the toggle button is clicked again
-        $("#navbarToggleBtn").click(function () {
-            if ($(".navbar-collapse").hasClass("show")) {
+    <script>
+        $(document).ready(function () {
+            // Close the mobile menu when a link is clicked
+            $(".navbar-nav li a").click(function () {
                 $(".navbar-collapse").collapse('hide');
-            }
+            });
+
+            // Close the mobile menu when the toggle button is clicked again
+            $("#navbarToggleBtn").click(function () {
+                if ($(".navbar-collapse").hasClass("show")) {
+                    $(".navbar-collapse").collapse('hide');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
+
 </html>
